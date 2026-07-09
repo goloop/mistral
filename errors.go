@@ -2,6 +2,7 @@ package mistral
 
 import (
 	"encoding/json"
+	"strings"
 
 	"github.com/goloop/ai"
 )
@@ -17,27 +18,43 @@ func parseError(status int, body []byte) error {
 
 	var nested struct {
 		Error struct {
-			Message string `json:"message"`
-			Type    string `json:"type"`
-			Code    string `json:"code"`
+			Message string          `json:"message"`
+			Type    string          `json:"type"`
+			Code    json.RawMessage `json:"code"`
 		} `json:"error"`
 	}
 	if json.Unmarshal(body, &nested) == nil && nested.Error.Message != "" {
 		e.Message = nested.Error.Message
 		e.Type = nested.Error.Type
-		e.Code = nested.Error.Code
+		e.Code = rawToString(nested.Error.Code)
 		return e
 	}
 
 	var flat struct {
-		Message string `json:"message"`
-		Type    string `json:"type"`
-		Code    string `json:"code"`
+		Message string          `json:"message"`
+		Type    string          `json:"type"`
+		Code    json.RawMessage `json:"code"`
 	}
 	if json.Unmarshal(body, &flat) == nil {
 		e.Message = flat.Message
 		e.Type = flat.Type
-		e.Code = flat.Code
+		e.Code = rawToString(flat.Code)
 	}
 	return e
+}
+
+// rawToString renders a JSON value that may be a string or a number (some
+// gateways send a numeric "code") as a plain string.
+func rawToString(r json.RawMessage) string {
+	s := strings.TrimSpace(string(r))
+	if s == "" || s == "null" {
+		return ""
+	}
+	if s[0] == '"' {
+		var str string
+		if json.Unmarshal(r, &str) == nil {
+			return str
+		}
+	}
+	return s
 }
