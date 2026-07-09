@@ -7,6 +7,7 @@
 package mistral_test
 
 import (
+	"cmp"
 	"context"
 	"encoding/json"
 	"os"
@@ -16,7 +17,7 @@ import (
 	"github.com/goloop/mistral"
 )
 
-const integrationModel = mistral.ModelSmallLatest
+var integrationModel = cmp.Or(os.Getenv("MISTRAL_MODEL"), mistral.ModelSmallLatest)
 
 func integrationClient(t *testing.T) *mistral.Client {
 	t.Helper()
