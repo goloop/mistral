@@ -14,7 +14,7 @@ top.
   token-by-token output through `iter.Seq2`.
 - Tool use (function calling), multimodal image input and system prompts.
 - Native `ChatCompletion` and `ChatCompletionStream` with the full option set.
-- Embeddings and model listing.
+- Embeddings, fill-in-the-middle completions and model listing.
 - Retries on 429 and 5xx with backoff; normalized, typed API errors.
 - Depends only on `github.com/goloop/ai` and the standard library.
 
@@ -67,6 +67,19 @@ for chunk, err := range c.Stream(ctx, req) {
 
 ```go
 vecs, err := c.Embed(ctx, mistral.ModelEmbed, "hello", "world")
+```
+
+## Fill-in-the-middle
+
+Codestral models can complete the gap between a prefix and a suffix. Read the
+inserted code from the first choice's message content.
+
+```go
+resp, err := c.FIM(ctx, &mistral.FIMRequest{
+	Model:  mistral.ModelCodestral,
+	Prompt: "def add(a, b):\n    ",
+	Suffix: "\n    return result",
+})
 ```
 
 ## Documentation

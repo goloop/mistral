@@ -15,6 +15,7 @@ Initial release, built on the `github.com/goloop/ai` interface.
 - Native `ChatCompletion` and `ChatCompletionStream` exposing the full chat
   option set.
 - Embeddings (`Embeddings`, `Embed`) and models (`Models`, `GetModel`).
+- Fill-in-the-middle completions (`FIM`) for Codestral models.
 - Functional options: `WithBaseURL`, `WithHTTPClient`, `WithTimeout`,
   `WithMaxRetries`, `WithHeader`.
 - Retries on 429 and 5xx with backoff; normalized `*ai.APIError` errors.

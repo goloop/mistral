@@ -12,6 +12,7 @@ const (
 	ModelSmallLatest = "mistral-small-latest"
 	ModelPixtral     = "pixtral-12b-2409"
 	ModelEmbed       = "mistral-embed"
+	ModelCodestral   = "codestral-latest"
 )
 
 // Client is a Mistral API client. It implements [ai.Client] and adds the
