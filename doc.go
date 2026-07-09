@@ -3,8 +3,9 @@
 //
 // The Client implements ai.Client, so Generate and Stream work the same as
 // with any other goloop AI provider. On top of that it exposes the native
-// chat completions endpoint with its full options, embeddings and model
-// listing. The wire format is chat-completions compatible.
+// chat completions endpoint with its full options, embeddings, fill-in-the-
+// middle completions (FIM, for Codestral models) and model listing. The wire
+// format is chat-completions compatible.
 //
 //	c := mistral.New(os.Getenv("MISTRAL_API_KEY"))
 //	resp, err := c.Generate(ctx, &ai.Request{

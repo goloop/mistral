@@ -28,6 +28,18 @@ func ExampleClient_Generate() {
 	// Output: mistral-large-latest 1
 }
 
+// ExampleClient_FIM shows a fill-in-the-middle request. The model completes the
+// gap between Prompt and Suffix; read the inserted text from the first choice.
+func ExampleClient_FIM() {
+	req := &mistral.FIMRequest{
+		Model:  mistral.ModelCodestral,
+		Prompt: "def add(a, b):\n    ",
+		Suffix: "\n    return result",
+	}
+	fmt.Println(req.Model)
+	// Output: codestral-latest
+}
+
 // ExampleTool shows a tool definition passed with a request.
 func ExampleTool() {
 	tool := ai.Tool{
