@@ -9,7 +9,6 @@ AI provider, and exposes Mistral's native endpoints with their full options on
 top.
 
 ## Features
-
 - Chat completions: `Generate` for a single response, `Stream` for
   token-by-token output through `iter.Seq2`.
 - Tool use (function calling), multimodal image input and system prompts.
@@ -19,6 +18,8 @@ top.
 - Depends only on `github.com/goloop/ai` and the standard library.
 - Structured output: `ai.Format` maps onto the provider's `response_format`
   (JSON mode or a JSON Schema); read the reply with `resp.JSON(&v)`.
+- Hosted capabilities: `ai.Request.Hosted` is refused with `ai.ErrNoHosted`,
+  because this provider's search lives on another endpoint.
 
 ## Installation
 

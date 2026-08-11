@@ -12,6 +12,7 @@ Ukrainian version: **[DOC.UK.md](DOC.UK.md)**.
 - [Creating a client](#creating-a-client)
 - [Generate and Stream](#generate-and-stream)
 - [Structured output](#structured-output)
+- [Hosted web search](#hosted-web-search)
 - [Native chat completions](#native-chat-completions)
 - [Tools, images and system prompts](#tools-images-and-system-prompts)
 - [Embeddings](#embeddings)
@@ -133,6 +134,21 @@ resp, err := c.Embeddings(ctx, &mistral.EmbeddingRequest{
 models, err := c.Models(ctx)
 m, err := c.GetModel(ctx, mistral.ModelLargeLatest)
 ```
+
+## Hosted web search
+
+`ai.Request.Hosted` is answered with `ai.ErrNoHosted` before the request
+leaves.
+
+This provider's hosted search belongs to its conversations and agents endpoints,
+not to the chat endpoint this package speaks. Its own documentation gives the
+reason: a chat reply carries no references, and references are the half that
+makes a searched answer checkable.
+
+The refusal is the documented behavior, not a gap left in silence: an answer
+produced without the search that was asked for looks exactly like one produced
+with it, so failing loudly is the only way you can tell them apart. If you would
+rather have the answer anyway, ask again without `Hosted`.
 
 ## Options and errors
 
